@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio BUT R&T - 1ère Année</title>
+    
+    <!-- Code CSS de niveau 1ère année (sans framework) -->
+    <style>
+        /* === VARIABLES & RESET === */
+        :root {
+            --primary: #2563eb; /* Bleu */
+            --primary-hover: #1d4ed8;
+            --secondary: #f1f5f9; /* Gris très clair */
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --bg-body: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* === STRUCTURE PRINCIPALE === */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        /* === HEADER & NAVIGATION === */
+        header {
+            background-color: #0f172a; /* Bleu très foncé */
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            background-color: var(--primary);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav button:hover, nav button.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* === UTILITAIRES === */
+        .hidden { display: none !important; }
+        .page-section { animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* === COMPOSANTS DE L'ACCUEIL === */
+        .hero {
+            background-color: var(--bg-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            display: flex;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            align-items: center; /* Centre verticalement le texte et l'image */
+        }
+
+        .hero-text {
+            padding: 3rem;
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-text h1 span {
+            color: var(--primary);
+        }
+
+        .hero-text p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Styles pour l'espace photo sur l'accueil */
+        .hero-image-container {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background-color: var(--secondary); /* Fond légèrement gris pour le contraste */
+            height: 100%;
+        }
+
+        .hero-photo {
+            width: 100%;
+            max-width: 280px;
+            aspect-ratio: 1 / 1;
+            object-fit: cover; /* Assure que l'image remplit bien le cercle sans être déformée */
+            border-radius: 50%;
+            border: 6px solid var(--bg-white);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-photo:hover {
+            transform: scale(1.05); /* Petit effet au survol */
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover { background-color: var(--primary-hover); }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--text-main);
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover { background-color: #e2e8f0; }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .card h3 { margin: 15px 0 10px; }
+        .card p { color: var(--text-light); font-size: 0.95rem; }
+
+        /* === COMPOSANTS DES SAÉ === */
+        .sae-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .sae-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sae-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .sae-tags {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .tag-code { background: var(--secondary); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        .tag-comp { background: #eff6ff; color: #1d4ed8; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+
+        .sae-card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+        .sae-card p { color: var(--text-light); font-size: 0.9rem; flex-grow: 1; margin-bottom: 15px;}
+        .sae-card .read-more { color: var(--primary); font-size: 0.9rem; font-weight: bold; }
+
+        /* === DÉTAIL D'UNE SAÉ === */
+        .back-btn {
+            background: none; border: none; color: var(--text-light);
+            cursor: pointer; font-size: 1rem; margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .back-btn:hover { color: var(--primary); }
+
+        .detail-header {
+            background-color: #0f172a; color: white;
+            padding: 2.5rem; border-radius: var(--radius) var(--radius) 0 0;
+        }
+        .detail-body {
+            background: var(--bg-white); padding: 2.5rem;
+            border: 1px solid var(--border-color); border-top: none;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+        .detail-section { margin-bottom: 2rem; }
+        .detail-section h2 { border-bottom: 2px solid var(--secondary); padding-bottom: 10px; margin-bottom: 15px; color: var(--primary); }
+        .detail-section ul { margin-left: 20px; color: var(--text-light); }
+        .detail-section li { margin-bottom: 8px; }
+
+        .reflexion-box {
+            background-color: #eff6ff; border: 1px solid #bfdbfe;
+            padding: 1.5rem; border-radius: var(--radius);
+        }
+        .reflexion-item { background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e2e8f0;}
+
+        /* === PROFIL & BILANS === */
+        .profile-layout { display: flex; gap: 2rem; background: white; padding: 2rem; border-radius: var(--radius); border: 1px solid var(--border-color);}
+        .profile-sidebar { width: 300px; text-align: center; }
+        .profile-photo { width: 150px; height: 150px; background: var(--secondary); border-radius: 50%; margin: 0 auto 15px; display: block; }
+        
+        .bilan-card { background: white; border-radius: var(--radius); border: 1px solid var(--border-color); margin-bottom: 2rem; overflow: hidden;}
+        .bilan-header { background: var(--secondary); padding: 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;}
+        .bilan-content { padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+        /* === FOOTER === */
+        footer {
+            background-color: #0f172a; color: #94a3b8;
+            text-align: center; padding: 2rem; margin-top: auto;
+        }
+
+        /* Responsive basique */
+        @media (max-width: 768px) {
+            .hero, .profile-layout, .bilan-content { flex-direction: column; }
+            .hero-text { padding: 2rem; text-align: center; }
+            .hero-image-container { padding: 2rem 1rem; width: 100%; border-top: 1px solid var(--border-color); }
+            .profile-sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- === EN-TÊTE ET MENU === -->
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="changerPage('accueil')">
+                <div class="logo-icon">R&T</div>
+                <span>Portfolio | 1ère Année</span>
+            </div>
+            <nav>
+                <button id="nav-accueil" class="active" onclick="changerPage('accueil')">Accueil</button>
+                <button id="nav-profil" onclick="changerPage('profil')">Profil</button>
+                <button id="nav-sae" onclick="changerPage('sae')">Mes Projets</button>
+                <button id="nav-bilans" onclick="changerPage('bilans')">Bilans</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- === CONTENU PRINCIPAL === -->
+    <main class="container">
+
+        <!-- VUE : ACCUEIL -->
+        <section id="accueil" class="page-section">
+            <div class="hero">
+                <div class="hero-text">
+                    <p style="text-transform: uppercase; color: var(--primary); font-weight: bold; font-size: 0.9rem;">Bienvenue sur mon espace professionnel</p>
+                    <h1>Mon parcours en <br><span>Réseaux & Télécommunications</span></h1>
+                    <p>Ce portfolio, réalisé entièrement en HTML et CSS, documente ma première année de BUT Réseaux et Télécommunications. À travers l'analyse de mes Mises en Situation (SAÉ), vous découvrirez mes premières acquisitions techniques et ma méthodologie de travail.</p>
+                    <button class="btn-primary" onclick="changerPage('sae')">Voir mes projets (SAÉ)</button>
+                    <button class="btn-secondary" onclick="changerPage('profil')">Mon profil</button>
+                </div>
+                <!-- Espace Photo Ajouté -->
+                <div class="hero-image-container">
+                    <!-- REMPLACE L'ATTRIBUT SRC PAR LE CHEMIN DE TA PHOTO (ex: "images/ma-photo.jpg") -->
+                    <img src="imgmoi.jpg" alt="Photo de profil" class="hero-photo">
+                </div>
+            </div>
+
+            <div class="info-cards">
+                <div class="card">
+                    <h3>À mon sujet</h3>
+                    <p>Je suis Corentin Saint Saulieux, J'ai 19 ans et vie sur Mondeville.</p>
+                </div>
+                <div class="card">
+                    <h3>Lycée technologique</h3>
+                    <p>Je provient d'un bac technologique STI2D réussi avec la menssion assée bien.</p>
+                </div>
+                <div class="card">
+                    <h3>En savoir plus</h3>
+                    <p>Pour en savoir plus à mon sujet je vous invite à regarder dans l'onglet "<a href="#" onclick="changerPage('profil'); return false;" style="color: var(--primary); font-weight: bold; text-decoration: underline;">Profil</a>"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VUE : PROFIL -->
+        <section id="profil" class="page-section hidden">
+            <div class="profile-layout">
+                <div class="profile-sidebar">
+                    <img src="imgmoi.jpg" alt="Photo Profil" class="profile-photo">
+                    <h2 style="margin-bottom: 5px;">Corentin Saint Saulieux</h2>
+                    <p style="color: var(--primary); font-weight: bold; margin-bottom: 15px;">Étudiant en 1ère année BUT R&T</p>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">corentin.saint-saulieux@etu.unicaen.fr</p>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">06 49 21 79 20</p>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">IUT Grand Ouest Normandie</p>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">3 rue de la pommeraie</p>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">14120, Mondeville</p>
+                    
+                </div>
+                <div style="flex: 1;">
+                    <h2 style="border-bottom: 2px solid var(--secondary); padding-bottom: 10px; margin-bottom: 15px;">Présentation</h2>
+                    <p style="margin-bottom: 15px; color: var(--text-light);">Je me présente, je suis Corentin Saint Saulieux, j'ai 19 ans et je vis à Mondeville. Je suis étudiant en première année de BUT Réseaux et Télécommunications. <br> <br> Mes passions sont les sports extrêmes, l'univers Warhammer et les jeux vidéo. <br>J'ai pratiqué le handball de mon CM2 jusqu'à ma dernière année de terminale. J'ai fait le choix d'arrêter le handball pour me concentrer sur mes études et m'investir à fond dans une autre de mes passions : le SKATEBOARD. En effet, depuis ma seconde, je pratique le skateboard freestyle. <br><br> Toutes ces passions et ces sports m'ont permis d'acquérir beaucoup de qualités. Le skate m'a offert de la rigueur, de la discipline face à l'échec, ainsi que de la persévérance. Quant au handball, il m'a appris le travail en équipe, la confiance en l'autre, la communication, le fair-play et la modestie.</p>
+                    <h2 style="border-bottom: 2px solid var(--secondary); padding-bottom: 10px; margin-bottom: 15px; margin-top: 30px;">Ce que j'ai découvert cette année</h2>
+                    <p style="margin-bottom: 15px; color: var(--text-light);">Le passage du lycée à l'IUT a été intense. J'ai particulièrement apprécié l'aspect concret des Travaux Pratiques : câbler physiquement une baie, configurer un switch en ligne de commande, ou encore créer mes premières pages Web. J'ai aussi pris conscience de l'importance de la rigueur et de la documentation (comptes-rendus, schémas réseau).</p>
+
+                    <div style="background: #eff6ff; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                        <h3 style="color: var(--primary); margin-bottom: 10px;">Objectifs pour l'année prochaine : Le BTS CIEL</h3>
+                        <p style="color: var(--text-main); font-size: 0.95rem;">Cette première année en BUT R&T a été très enrichissante, mais elle m'a aussi permis d'affiner mon véritable projet professionnel. Je me suis rendu compte que le domaine des télécommunications ne correspond pas à mes aspirations et que je ne souhaite pas en faire mon métier. C'est pourquoi j'ai pris la décision de me réorienter vers un <strong>BTS CIEL</strong> (Cybersécurité, Informatique et réseaux, Électronique). C'est pour moi la meilleure option : ce cursus me permettra de me concentrer exclusivement sur ce qui me passionne réellement, c'est-à-dire l'informatique et les réseaux, afin de construire une carrière dans laquelle je serai pleinement épanoui.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VUE : LISTE DES SAÉ -->
+        <section id="sae" class="page-section hidden">
+            <h1 style="margin-bottom: 10px;">Mes Situations d'Apprentissage (SAÉ)</h1>
+            <p style="color: var(--text-light); margin-bottom: 30px;">Voici les projets majeurs réalisés durant mes semestres 1 et 2.</p>
+
+            <h2 style="font-size: 1.2rem; color: var(--text-main); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Semestre 1</h2>
+            <div class="sae-grid">
+                <!-- Carte SAÉ 1.01 -->
+                <div class="sae-card" onclick="ouvrirDetailSae('sae-101')">
+                    <div class="sae-tags">
+                        <span class="tag-code">SAÉ 1.01</span>
+                        <span class="tag-comp">RT1</span>
+                    </div>
+                    <h3>Se sensibiliser à l’hygiène informatique</h3>
+                    <p>Découverte des enjeux de base de la sécurité informatique au sein d'une organisation fictive et bonnes pratiques.</p>
+                    <span class="read-more">Voir l'analyse →</span>
+                </div>
+
+                <!-- Carte SAÉ 1.02 -->
+                <div class="sae-card" onclick="ouvrirDetailSae('sae-102')">
+                    <div class="sae-tags">
+                        <span class="tag-code">SAÉ 1.02</span>
+                        <span class="tag-comp">RT1</span>
+                    </div>
+                    <h3>S'initier aux réseaux informatiques</h3>
+                    <p>Première approche pratique de la configuration de commutateurs et maquettage physique et logique d'un réseau local.</p>
+                    <span class="read-more">Voir l'analyse →</span>
+                </div>
+            </div>
+
+            <h2 style="font-size: 1.2rem; color: var(--text-main); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-top: 40px;">Semestre 2</h2>
+            <div class="sae-grid">
+                <!-- Carte SAÉ 2.03 -->
+                <div class="sae-card" onclick="ouvrirDetailSae('sae-203')">
+                    <div class="sae-tags">
+                        <span class="tag-code">SAÉ 2.03</span>
+                        <span class="tag-comp">RT1, RT3</span>
+                    </div>
+                    <h3>Solution informatique pour une PME</h3>
+                    <p>Refonte de l'infrastructure réseau d'une PME (VLANs) et mise en place d'un serveur web interne HTML/CSS/PHP.</p>
+                    <span class="read-more">Voir l'analyse →</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- DÉTAILS DES SAÉ (Masqués par défaut) -->
+
+        <!-- Détail SAÉ 1.01 -->
+        <section id="sae-101" class="page-section hidden">
+            <button class="back-btn" onclick="changerPage('sae')">← Retour à la liste des SAÉ</button>
+            <div class="detail-header">
+                <span class="tag-code" style="background: var(--primary); color: white;">SAÉ 1.01</span>
+                <h1 style="margin-top: 15px;">Se sensibiliser à l’hygiène informatique</h1>
+                <p style="color: #cbd5e1; margin-top: 5px;">Compétences : RT1 (Administrer les réseaux)</p>
+            </div>
+            <div class="detail-body">
+                <div class="detail-section">
+                    <h2>Objectif et Contexte</h2>
+                    <p>Dans le cadre de notre intégration en BUT R&T, cette SAÉ avait pour but de nous faire prendre conscience des enjeux de base de la sécurité informatique. Nous avons dû analyser les pratiques d'utilisateurs fictifs et proposer des règles simples.</p>
+                </div>
+                <div class="detail-section">
+                    <h2>Apprentissages Critiques (AC) mobilisés</h2>
+                    <ul>
+                        <li>AC11.04 - Maîtriser les rôles et principes fondamentaux des OS</li>
+                        <li>AC11.05 - Identifier les dysfonctionnements du réseau local</li>
+                    </ul>
+                </div>
+                <div class="detail-section">
+                    <h2>Tâches réalisées</h2>
+                    <ul>
+                        <li>Audit basique des mots de passe sur les postes de travail de la salle TP (Windows/Linux).</li>
+                        <li>Rédaction d'une charte informatique simplifiée pour les utilisateurs.</li>
+                        <li>Configuration de base des pare-feu locaux sur les postes de travail.</li>
+                    </ul>
+                </div>
+                <div class="reflexion-box">
+                    <h2 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem;">Analyse Réflexive</h2>
+                    <div class="reflexion-item">
+                        <strong>Difficulté rencontrée :</strong> La vulgarisation technique. Il a été difficile d'expliquer les risques d'une clé USB infectée sans utiliser de jargon réseau. J'ai résolu cela en faisant relire mon rapport à un proche hors informatique.
+                    </div>
+                    <div class="reflexion-item">
+                        <strong>Ce que j'ai appris :</strong> J'ai compris que l'humain est souvent la première faille. Configurer un OS ne sert à rien si l'utilisateur laisse son mot de passe sur un post-it.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Détail SAÉ 1.02 -->
+        <section id="sae-102" class="page-section hidden">
+            <button class="back-btn" onclick="changerPage('sae')">← Retour à la liste des SAÉ</button>
+            <div class="detail-header">
+                <span class="tag-code" style="background: var(--primary); color: white;">SAÉ 1.02</span>
+                <h1 style="margin-top: 15px;">S'initier aux réseaux informatiques</h1>
+                <p style="color: #cbd5e1; margin-top: 5px;">Compétences : RT1 (Administrer les réseaux)</p>
+            </div>
+            <div class="detail-body">
+                <div class="detail-section">
+                    <h2>Objectif et Contexte</h2>
+                    <p>L'objectif était de monter physiquement et logiquement notre premier réseau local en binôme. Il fallait interconnecter plusieurs PC via des switchs, attribuer des adresses IPv4, et vérifier la connectivité.</p>
+                </div>
+                <div class="detail-section">
+                    <h2>Apprentissages Critiques (AC) mobilisés</h2>
+                    <ul>
+                        <li>AC11.03 - Configurer les fonctions de base du réseau local</li>
+                        <li>AC11.06 - Installer un poste client, expliquer la procédure mise en place</li>
+                    </ul>
+                </div>
+                <div class="detail-section">
+                    <h2>Tâches réalisées</h2>
+                    <ul>
+                        <li>Réalisation du schéma logique sur Packet Tracer.</li>
+                        <li>Câblage physique en salle TP (câbles droits).</li>
+                        <li>Configuration des adresses IP fixes et masques de sous-réseau sur Windows.</li>
+                        <li>Utilisation de la commande <code>ping</code> pour valider les tests de connectivité.</li>
+                    </ul>
+                </div>
+                <div class="reflexion-box">
+                    <h2 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem;">Analyse Réflexive</h2>
+                    <div class="reflexion-item">
+                        <strong>Difficulté rencontrée :</strong> Nous avons eu un problème de communication entre deux PC car nous avions fait une erreur dans le masque de sous-réseau (un PC n'était pas dans le bon réseau logique).
+                    </div>
+                    <div class="reflexion-item">
+                        <strong>Ce que j'ai appris :</strong> C'est ma première vraie application du modèle OSI (couche 1 physique, couche 2 liaison, couche 3 réseau). Savoir où chercher la panne (câble mal branché ou mauvaise adresse IP) est essentiel.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Détail SAÉ 2.03 -->
+        <section id="sae-203" class="page-section hidden">
+            <button class="back-btn" onclick="changerPage('sae')">← Retour à la liste des SAÉ</button>
+            <div class="detail-header">
+                <span class="tag-code" style="background: var(--primary); color: white;">SAÉ 2.03</span>
+                <h1 style="margin-top: 15px;">Mettre en place une solution pour une PME</h1>
+                <p style="color: #cbd5e1; margin-top: 5px;">Compétences : RT1 (Réseaux) & RT3 (Outils informatiques)</p>
+            </div>
+            <div class="detail-body">
+                <div class="detail-section">
+                    <h2>Objectif et Contexte</h2>
+                    <p>Au second semestre, le niveau monte : une PME locale fictive avait besoin de séparer son réseau (VLANs) et de mettre en place un serveur web interne pour son intranet. Projet réalisé en groupe de 4.</p>
+                </div>
+                <div class="detail-section">
+                    <h2>Apprentissages Critiques (AC) mobilisés</h2>
+                    <ul>
+                        <li>AC11.03 - Configurer les fonctions de base du réseau local (Switching/VLANs)</li>
+                        <li>AC13.04 - Connaître l'architecture et les technologies d'un site Web (HTML/CSS)</li>
+                        <li>AC13.06 - S'intégrer dans un environnement collaboratif</li>
+                    </ul>
+                </div>
+                <div class="detail-section">
+                    <h2>Tâches réalisées</h2>
+                    <ul>
+                        <li>Création de 3 VLANs sur commutateur Cisco (Direction, Employés, Serveurs).</li>
+                        <li>Déploiement d'un serveur Web Apache sous Linux Debian (en ligne de commande).</li>
+                        <li>Développement de la maquette de l'intranet en HTML5 et CSS3 (sans framework).</li>
+                    </ul>
+                </div>
+                <div class="reflexion-box">
+                    <h2 style="color: var(--primary); margin-bottom: 15px; font-size: 1.2rem;">Analyse Réflexive</h2>
+                    <div class="reflexion-item">
+                        <strong>Difficulté rencontrée :</strong> La configuration des "Trunks" entre les commutateurs pour laisser passer tous les VLANs a été bloquante. Nous avons dû utiliser Wireshark pour comprendre l'encapsulation.
+                    </div>
+                    <div class="reflexion-item">
+                        <strong>Ce que j'ai retenu :</strong> L'interdépendance entre les systèmes et les réseaux. J'ai adoré voir la page Web que nous avions codée s'afficher sur un autre ordinateur via le réseau que nous avions nous-mêmes configuré.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VUE : BILANS DE COMPÉTENCES -->
+        <section id="bilans" class="page-section hidden">
+            <h1 style="margin-bottom: 10px;">Bilan de 1ère Année (S1/S2)</h1>
+            <p style="color: var(--text-light); margin-bottom: 30px;">Synthèse de mon évolution sur les 3 compétences du tronc commun évaluées en niveau 1.</p>
+
+            <!-- Bilan RT1 -->
+            <div class="bilan-card">
+                <div class="bilan-header">
+                    <h2>RT1 - Administrer les réseaux (Niveau 1)</h2>
+                    <span class="tag-code">Assister l'administrateur</span>
+                </div>
+                <div class="bilan-content">
+                    <div>
+                        <h3 style="color: var(--primary); font-size: 1rem; margin-bottom: 10px;">Progression & Acquis</h3>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">Je suis passé d'une méconnaissance totale des équipements réseaux à la capacité de configurer des commutateurs (CLI Cisco), de gérer l'adressage IPv4/IPv6 et de comprendre l'architecture matérielle d'un PC.</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary); font-size: 1rem; margin-bottom: 10px;">Axe d'amélioration</h3>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">Je dois gagner en rapidité sur le diagnostic (troubleshooting). Parfois, je modifie des configurations au hasard sans suivre strictement le modèle OSI en cas de panne.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bilan RT2 -->
+            <div class="bilan-card">
+                <div class="bilan-header">
+                    <h2>RT2 - Connecter les entreprises (Niveau 1)</h2>
+                    <span class="tag-code">Découvrir les transmissions</span>
+                </div>
+                <div class="bilan-content">
+                    <div>
+                        <h3 style="color: var(--primary); font-size: 1rem; margin-bottom: 10px;">Progression & Acquis</h3>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">Apprentissage de la couche physique du réseau. J'ai appris à différencier les supports (cuivre, fibre optique), à comprendre les notions d'atténuation et à manipuler des outils de mesure de signaux.</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary); font-size: 1rem; margin-bottom: 10px;">Axe d'amélioration</h3>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">La partie mathématique (caractérisation des signaux, fréquences) m'a demandé beaucoup d'efforts. Je dois relire mes cours d'architecture des communications pour le semestre 3.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bilan RT3 -->
+            <div class="bilan-card">
+                <div class="bilan-header">
+                    <h2>RT3 - Créer des outils informatiques (Niveau 1)</h2>
+                    <span class="tag-code">S'intégrer dans un service</span>
+                </div>
+                <div class="bilan-content">
+                    <div>
+                        <h3 style="color: var(--primary); font-size: 1rem; margin-bottom: 10px;">Progression & Acquis</h3>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">Une très belle découverte. J'ai appris à scripter en Bash sous Linux pour automatiser des tâches, à concevoir des bases de données SQL simples, et j'ai acquis les bases de la création Web (comme le prouve ce portfolio codé en HTML/CSS !).</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary); font-size: 1rem; margin-bottom: 10px;">Axe d'amélioration</h3>
+                        <p style="color: var(--text-light); font-size: 0.95rem;">Le langage de programmation algorithmique (Python) nécessite plus de pratique de ma part pour bien maîtriser les boucles et les structures de données complexes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- === PIED DE PAGE === -->
+    <footer>
+        <p>© 2026 - Portfolio BUT Réseaux & Télécommunications (1ère Année)</p>
+        <p style="font-size: 0.8rem; margin-top: 5px;">IUT Grand Ouest Normandie - Université de Caen</p>
+        <p style="font-size: 0.8rem; margin-top: 5px;">Corentin Saint Saulieux</p>
+    </footer>
+
+    <!-- === SCRIPT JAVASCRIPT SIMPLE (Niveau 1ère année) === -->
+    <script>
+        // Fonction pour gérer la navigation du site "One-Page"
+        function changerPage(idPage) {
+            // 1. Cacher toutes les sections
+            const toutesLesSections = document.querySelectorAll('.page-section');
+            for(let i = 0; i < toutesLesSections.length; i++) {
+                toutesLesSections[i].classList.add('hidden');
+            }
+
+            // 2. Retirer la classe 'active' de tous les boutons du menu
+            const tousLesBoutons = document.querySelectorAll('nav button');
+            for(let i = 0; i < tousLesBoutons.length; i++) {
+                tousLesBoutons[i].classList.remove('active');
+            }
+
+            // 3. Afficher la section demandée
+            const sectionAAfficher = document.getElementById(idPage);
+            if(sectionAAfficher) {
+                sectionAAfficher.classList.remove('hidden');
+            }
+
+            // 4. Mettre en surbrillance le bouton du menu correspondant
+            // (Sauf si c'est une vue de détail SAÉ, dans ce cas on garde le bouton "Mes SAÉ" actif)
+            let idBouton = 'nav-' + idPage;
+            if(idPage.startsWith('sae-')) {
+                idBouton = 'nav-sae';
+            }
+            
+            const boutonActif = document.getElementById(idBouton);
+            if(boutonActif) {
+                boutonActif.classList.add('active');
+            }
+
+            // 5. Remonter en haut de la page
+            window.scrollTo(0, 0);
+        }
+
+        // Fonction spécifique pour ouvrir les détails d'une SAÉ
+        function ouvrirDetailSae(idSae) {
+            changerPage(idSae);
+        }
+    </script>
+</body>
+</html>
